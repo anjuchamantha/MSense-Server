@@ -13,7 +13,9 @@ class TestData(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Welcome to MSense-Server",
+            "API Documentation": "/docs#/",
+            "API Specification": "/redoc#/"}
 
 
 @app.post("/test/{uid}")
