@@ -21,3 +21,4 @@ async def test(uid: str, test_data: TestData):
     msg = "Test data received of the user: %s" % uid
     return {"message": msg,
             "test_data": test_data}
+
