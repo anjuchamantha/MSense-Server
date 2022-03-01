@@ -1,5 +1,6 @@
 import input
 import BASE
+import RandomForest as rf
 
 df = input.df
 x_cols = input.x_cols
@@ -19,5 +20,8 @@ print("[Dataframe] Feature Group Names = ", f_groups_name_)
 
 print("[Dataframe] # of features = ", len(f_groups_))
 
-rf_results = BASE.train_and_save(dataframe=df, feature_group=f_groups_, y_col=y_col)
-print(rf_results)
+# rf_results = BASE.train_and_save(dataframe=df, feature_group=f_groups_, y_col=y_col)
+# print(rf_results)
+
+rf_predict = rf.rf_predict([[7, 7, 48.4, 0, 0, 0, 0, 0]], filename="rf_clf")
+# print(rf_predict)
