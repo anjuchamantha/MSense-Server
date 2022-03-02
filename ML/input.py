@@ -34,7 +34,6 @@ bat = ['battery_level']  # has null values
 charging_count = ["charging_true_count", "charging_false_count"]
 charging_sources = ['charging_ac', 'charging_usb', 'charging_unknown']
 bat_all = bat + charging_count + charging_sources
-bat_usable = charging_count + charging_sources
 
 # LOC
 radius_of_gyration = ["radius_of_gyration"]
@@ -56,13 +55,33 @@ screen_all = ['screen_on_count', 'screen_off_count']
 # other
 user_id = ["user_id"]
 
-G1 = screen_all + apps_all + time_all # INT
-G2 = acc_all + bat_all + time_all + loc_all # CONT
+G1 = screen_all + apps_all + time_all  # INT
+G2 = acc_all + bat_all + time_all + loc_all  # CONT
 all_features = screen_all + apps_all + bat_all + time_all + acc_all + loc_all
 
-all_features_without_null = screen_all + apps_usable + bat_usable + time_all + acc_all
+all_features_without_null = screen_all + apps_usable + time_all + acc_all
 
-# ###########################################################################3 feature selection
+# ########################################################################### Server Features
+acc_all_ = ["acc_x", "acc_y", "acc_z", "acc_x_bef", "acc_y_bef", "acc_z_bef", "acc_x_aft", "acc_y_aft", "acc_z_aft",
+            "acc_xabs", "acc_yabs", "acc_zabs", "acc_xabs_bef", "acc_yabs_bef", "acc_zabs_bef", "acc_xabs_aft",
+            "acc_yabs_aft", "acc_zabs_aft"]
+bat_all_ = ["battery_level", "charging_true_count", "charging_false_count", "charging_ac", "charging_usb",
+            "charging_unknown"]
+time_all_ = ["minutes_elapsed", "hours_elapsed", "weekend"]
+loc_all_ = ["radius_of_gyration"]
+screen_all_ = ['screen_on_count', 'screen_off_count']
+
+# all_features_server = acc_all + bat_all + time_all + loc_all + screen_all
+
+
+all_features_server = ["acc_x", "acc_y", "acc_z", "acc_x_bef", "acc_y_bef", "acc_z_bef", "acc_x_aft", "acc_y_aft",
+                       "acc_z_aft",
+                       "acc_xabs", "acc_yabs", "acc_zabs", "acc_xabs_bef", "acc_yabs_bef", "acc_zabs_bef",
+                       "acc_xabs_aft",
+                       "acc_yabs_aft", "acc_zabs_aft", "battery_level", "charging_true_count", "charging_false_count",
+                       "charging_ac", "charging_usb",
+                       "charging_unknown", "minutes_elapsed", "hours_elapsed", "weekend", "radius_of_gyration",
+                       "screen_on_count", "screen_off_count"]
 
 y_col = ["meal_taken"]
 x_cols = screen_all + apps_all + bat_all + time_all + acc_all + loc_all
