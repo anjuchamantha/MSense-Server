@@ -35,7 +35,6 @@ class PredictionData(BaseModel):
 
     battery_level: float
     charging_true_count: float
-    charging_false_count: float
     charging_ac: float
     charging_usb: float
     charging_unknown: float
@@ -59,7 +58,7 @@ async def test(prediction_data: PredictionData):
             prediction_data.acc_yabs_bef, prediction_data.acc_zabs_bef,
             prediction_data.acc_xabs_aft,
             prediction_data.acc_yabs_aft, prediction_data.acc_zabs_aft, prediction_data.battery_level,
-            prediction_data.charging_true_count, prediction_data.charging_false_count,
+            prediction_data.charging_true_count,
             prediction_data.charging_ac, prediction_data.charging_usb,
             prediction_data.charging_unknown, prediction_data.minutes_elapsed, prediction_data.hours_elapsed,
             prediction_data.weekend, prediction_data.radius_of_gyration,

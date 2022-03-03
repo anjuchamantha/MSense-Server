@@ -78,7 +78,7 @@ all_features_server = ["acc_x", "acc_y", "acc_z", "acc_x_bef", "acc_y_bef", "acc
                        "acc_z_aft",
                        "acc_xabs", "acc_yabs", "acc_zabs", "acc_xabs_bef", "acc_yabs_bef", "acc_zabs_bef",
                        "acc_xabs_aft",
-                       "acc_yabs_aft", "acc_zabs_aft", "battery_level", "charging_true_count", "charging_false_count",
+                       "acc_yabs_aft", "acc_zabs_aft", "battery_level", "charging_true_count",
                        "charging_ac", "charging_usb",
                        "charging_unknown", "minutes_elapsed", "hours_elapsed", "weekend", "radius_of_gyration",
                        "screen_on_count", "screen_off_count"]
