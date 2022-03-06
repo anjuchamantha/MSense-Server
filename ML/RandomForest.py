@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score, f1_score
 
 
 def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
-    filename = filename + ".pkl"
+    filename = "Saved Models/" + filename + ".pkl"
     print("\n[RF TRAIN]")
     rf_clf = ensemble.RandomForestClassifier(n_estimators=200)
     rf_clf.fit(x_train, y_train.values.ravel())
@@ -38,7 +38,7 @@ def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
     return return_obj
 
 
-def rf_predict(predict_data, filename="ML/rf_clf"):
+def rf_predict(predict_data, filename="ML/Saved Models/rf_clf"):
     print(predict_data)
     pickle_in = open(filename + ".pkl", "rb")
     clf = pickle.load(pickle_in)

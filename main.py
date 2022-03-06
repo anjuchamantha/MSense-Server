@@ -2,7 +2,6 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 import ML.RandomForest as rf
-import ML.ML_main as ML_main
 
 app = FastAPI()
 
@@ -109,9 +108,9 @@ async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Option
                 }
 
 
-@app.post("/train")
-async def train():
-    results = ML_main.train()
-    return {"message": "Trained and Saved .pkl Successfully",
-            "result": results
-            }
+# @app.post("/train")
+# async def train():
+#     results = ML_main.train()
+#     return {"message": "Trained and Saved .pkl Successfully",
+#             "result": results
+#             }

@@ -21,7 +21,7 @@ print("[Dataframe] # of features = ", len(f_groups))
 # print(rf_results)
 
 
-# rf_predict = rf.rf_predict([[7, 7, 48.4, 0, 0, 0, 0, 0]], filename="rf_clf")
+# rf_predict = rf.rf_predict([[7, 7, 48.4, 0, 0, 0, 0, 0]], "Saved Models/rf_clf")
 # print(rf_predict)
 
 def train():
@@ -29,3 +29,6 @@ def train():
                                      training_percentage_max=95)
     print(rf_results)
     return rf_results
+
+
+train()

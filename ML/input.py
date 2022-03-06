@@ -1,6 +1,6 @@
 import pandas as pd
 
-processed_path_60min_v2 = "ML/processed_dataset_v2_60mins.csv"
+processed_path_60min_v2 = "processed_dataset_v2_60mins.csv"
 data = pd.read_csv(processed_path_60min_v2)
 
 # feature Groups
