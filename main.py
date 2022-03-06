@@ -69,3 +69,40 @@ async def test(prediction_data: PredictionData):
             "request": prediction_data,
             "prediction": str(prediction)
             }
+
+
+@app.post("/predict/full-pers")
+async def test(sensed_data: PredictionData, user_id: str, meal_taken: Optional[str] = None):
+    data = [sensed_data.acc_x, sensed_data.acc_y, sensed_data.acc_z, sensed_data.acc_x_bef,
+            sensed_data.acc_y_bef, sensed_data.acc_z_bef, sensed_data.acc_x_aft, sensed_data.acc_y_aft,
+            sensed_data.acc_z_aft,
+            sensed_data.acc_xabs, sensed_data.acc_yabs, sensed_data.acc_zabs, sensed_data.acc_xabs_bef,
+            sensed_data.acc_yabs_bef, sensed_data.acc_zabs_bef,
+            sensed_data.acc_xabs_aft,
+            sensed_data.acc_yabs_aft, sensed_data.acc_zabs_aft, sensed_data.battery_level,
+            sensed_data.charging_true_count,
+            sensed_data.charging_ac, sensed_data.charging_usb,
+            sensed_data.charging_unknown, sensed_data.minutes_elapsed, sensed_data.hours_elapsed,
+            sensed_data.weekend, sensed_data.radius_of_gyration,
+            sensed_data.screen_on_count, sensed_data.screen_off_count]
+
+    if meal_taken:
+        # Append the new datapoint with the ground truth
+        msg = "New data point received and saved with ground truth"
+
+        return {"message": msg,
+                "sensed data": sensed_data,
+                "user id": user_id,
+                "meal taken": meal_taken
+                }
+    else:
+        # If the user's number of data points is >10, test with the received data and send the prediction
+        msg = "Prediction successful"
+        prediction = rf.rf_predict([data])
+
+        print("Prediction:", prediction)
+        return {"message": msg,
+                "sensed data": sensed_data,
+                "user id": user_id,
+                "prediction": str(prediction)
+                }
