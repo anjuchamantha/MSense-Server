@@ -1,7 +1,8 @@
 from typing import Optional
 from fastapi import FastAPI
-from pydantic import BaseModel
+from models.SensedData import SensedData
 import ML.RandomForest as rf
+from ML.tools import append_to_user_dataset, is_user_model_available
 
 app = FastAPI()
 
@@ -11,41 +12,6 @@ async def root():
     return {"message": "Welcome to MSense-Server",
             "API Documentation": "/docs#/",
             "API Specification": "/redoc#/"}
-
-
-class SensedData(BaseModel):
-    acc_x: float
-    acc_y: float
-    acc_z: float
-    acc_x_bef: float
-    acc_y_bef: float
-    acc_z_bef: float
-    acc_x_aft: float
-    acc_y_aft: float
-    acc_z_aft: float
-    acc_xabs: float
-    acc_yabs: float
-    acc_zabs: float
-    acc_xabs_bef: float
-    acc_yabs_bef: float
-    acc_zabs_bef: float
-    acc_xabs_aft: float
-    acc_yabs_aft: float
-    acc_zabs_aft: float
-
-    battery_level: float
-    charging_true_count: float
-    charging_ac: float
-    charging_usb: float
-    charging_unknown: float
-
-    minutes_elapsed: float
-    hours_elapsed: float
-    weekend: float
-    radius_of_gyration: float
-
-    screen_on_count: float
-    screen_off_count: float
 
 
 @app.post("/predict")
@@ -89,6 +55,7 @@ async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Option
     if meal_taken:
         # Append the new datapoint with the ground truth
         msg = "New data point received and saved with ground truth"
+        append_to_user_dataset(user_id=user_id, sensed_data=sensed_data, meal_taken=float(meal_taken))
 
         return {"message": msg,
                 "sensed data": sensed_data,
@@ -97,8 +64,13 @@ async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Option
                 }
     else:
         # If the user's number of data points is >10, test with the received data and send the prediction
-        msg = "Prediction successful"
-        prediction = rf.rf_predict([data])
+        if is_user_model_available(user_id=user_id):
+            msg = "Prediction successful"
+            prediction = rf.rf_predict([data], filename="Saved Models/User Models/" + user_id + ".xlsx")
+        else:
+
+            msg = "Not enough user data to train PERS. Tested with BASE. New data appended to user dataset."
+            prediction = rf.rf_predict([data])
 
         print("Prediction:", prediction)
         return {"message": msg,
@@ -106,7 +78,6 @@ async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Option
                 "user id": user_id,
                 "prediction": str(prediction)
                 }
-
 
 # @app.post("/train")
 # async def train():

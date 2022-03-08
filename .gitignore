@@ -131,3 +131,5 @@ dmypy.json
 .idea/
 
 ML/processed_dataset_v2_60mins.csv
+
+ML/Saved Models/User Models/

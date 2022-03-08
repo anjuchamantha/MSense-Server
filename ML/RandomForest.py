@@ -1,10 +1,16 @@
 import pickle
 from sklearn import ensemble
 from sklearn.metrics import accuracy_score, f1_score
+from sklearn.model_selection import train_test_split
+
+
+def test_train_split(df, train_size=0.8):
+    train, test = train_test_split(df.copy(), train_size=train_size)
+    return train, test
 
 
 def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
-    filename = "Saved Models/" + filename + ".pkl"
+    filename = "ML/Saved Models/" + filename + ".pkl"
     print("\n[RF TRAIN]")
     rf_clf = ensemble.RandomForestClassifier(n_estimators=200)
     rf_clf.fit(x_train, y_train.values.ravel())
@@ -17,10 +23,10 @@ def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
     f1_w = f1_score(y_true=y_test, y_pred=y_pred_test, average='weighted')
     # print('F1 score w: %f' % f1_w)
 
-    pickle_out = open(filename , "wb")
+    pickle_out = open(filename, "wb")
     pickle.dump(rf_clf, pickle_out)
     pickle_out.close()
-    print("RF Model Saved as: " + filename )
+    print("RF Model Saved as: " + filename)
 
     # load the model from disk
     loaded_model = pickle.load(open(filename, 'rb'))
@@ -30,7 +36,7 @@ def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
 
     return_obj = {
         "model": "Random Forest",
-        "model_filename": filename ,
+        "model_filename": filename,
         "features": "",
         "results": {"accuracy": accuracy, "f1_score": f1_w}
     }

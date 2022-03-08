@@ -48,3 +48,5 @@ websockets==10.2
 wrapt==1.13.3
 yarg==0.1.9
 zipp==3.7.0
+
+openpyxl~=3.0.9
