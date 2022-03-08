@@ -11,4 +11,4 @@ uvicorn main:app --reload
 ## Heroku Deploy
 heroku login
 heroku git:remote -a msense-server
-heroku git:remote -a msense-server
+git push heroku master
