@@ -1,10 +1,11 @@
 import os
 import openpyxl
 import csv
-from models.SensedData import SensedData
+# from my_models.SensedData import SensedData
 import ML.BASE as BASE
 import pandas as pd
 from pathlib import Path
+import crud
 
 
 def feature_names_and_values(sensed_data):
@@ -71,7 +72,70 @@ def append_to_user_dataset(user_id, sensed_data, meal_taken):
         f_groups.remove("user_id")
         model_file_name = "User Models/" + user_id
         rf_results = BASE.train_and_save(dataframe=df, feature_group=f_groups, y_col=y_col, training_percentage_min=90,
-                                         training_percentage_max=95, filename=model_file_name, pers= True)
+                                         training_percentage_max=95, filename=model_file_name, pers=True)
+        print(rf_results)
+        return rf_results
+
+
+def append_to_db_dataset(user_id, sensed_data, meal_taken, db):
+    # file_path = "ML/Saved Models/User Models/" + user_id + ".csv"
+
+    #
+    # file = Path(file_path)
+    # if not file.exists():
+    #     print("No File for user: ", user_id)
+    #     with open(file_path, "w+", newline='') as file_data:
+    #         writer = csv.DictWriter(file_data, delimiter=',', fieldnames=headers)
+    #         writer.writeheader()
+    #
+    # print("Writing file: ", user_id)
+    # with open(file_path, "a", newline='') as file_data:
+    #     writer = csv.DictWriter(file_data, delimiter=',', fieldnames=headers)
+    #     writer.writerow(values_dict)
+
+    # Append new data as a new raw
+    # TODO: add to db
+    crud.create_eating_event(db=db, row=sensed_data, user_id=user_id, meal_taken=meal_taken)
+
+    # If number of rows > 10,
+    #   train the model and save
+
+    # input_file = open(file_path, "r+")
+    # reader_file = csv.reader(input_file)
+    # file_len = len(list(reader_file)) - 1
+    # input_file.close()
+    # TODO: get number of user data
+    user_data = crud.get_user_rows(db=db, user_id=user_id)
+    print(user_data)
+    print(type(user_data))
+    print(user_data[0])
+    print(type(user_data[0]))
+    file_len = len(user_data)
+
+    if file_len > 10:
+        # TODO: Make a df out of user's data
+        # for row in user_data:
+        headers, values, values_dict = feature_names_and_values(sensed_data=user_data[0])
+        f_groups = headers
+
+        headers.append("meal_taken")
+        headers.append("user_id")
+        # values.append(meal_taken)
+        # values_dict["meal_taken"] = meal_taken
+        # values_dict["user_id"] = user_id
+        # variables = headers
+        df = pd.DataFrame([[getattr(i, j) for j in headers] for i in user_data], columns=headers)
+        # df = df.drop(columns=['_sa_instance_state'], axis=1)
+        print(user_data[0].__dict__)
+        print(df.head())
+        # df = pd.read_csv(file_path)
+        y_col = ["meal_taken"]
+
+        # f_groups.remove("meal_taken")
+        # f_groups.remove("user_id")
+        model_file_name = "User Models/" + user_id
+        rf_results = BASE.train_and_save(dataframe=df, feature_group=f_groups, y_col=y_col, training_percentage_min=90,
+                                         training_percentage_max=95, filename=model_file_name, pers=True)
         print(rf_results)
         return rf_results
 
