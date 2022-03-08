@@ -45,7 +45,7 @@ def rf_train_and_save(x_train, y_train, x_test, y_test, filename="rf_clf"):
 
 
 def rf_predict(predict_data, filename="ML/Saved Models/rf_clf"):
-    print(predict_data)
+    print("predict data: ", predict_data)
     pickle_in = open(filename + ".pkl", "rb")
     clf = pickle.load(pickle_in)
     prediction = clf.predict(predict_data)

@@ -66,10 +66,10 @@ async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Option
         # If the user's number of data points is >10, test with the received data and send the prediction
         if is_user_model_available(user_id=user_id):
             msg = "Prediction successful"
-            prediction = rf.rf_predict([data], filename="Saved Models/User Models/" + user_id + ".xlsx")
+            prediction = rf.rf_predict([data], filename="ML/Saved Models/User Models/" + user_id)
         else:
 
-            msg = "Not enough user data to train PERS. Tested with BASE. New data appended to user dataset."
+            msg = "Not enough user data to train PERS. Tested with BASE."
             prediction = rf.rf_predict([data])
 
         print("Prediction:", prediction)

@@ -48,6 +48,7 @@ def split_user_base(df, training_percentage_min, training_percentage_max, pers):
 def train_and_save(dataframe, feature_group, y_col, filename, training_percentage_min=75,
                    training_percentage_max=80, pers=False):
     t1 = datetime.now()
+    # TODO: remove user_id column
     print(dataframe)
     # split test train split
     train_data, test_data = split_user_base(dataframe.copy(), training_percentage_min, training_percentage_max, pers)
@@ -59,10 +60,14 @@ def train_and_save(dataframe, feature_group, y_col, filename, training_percentag
     x_train_ws = train_data[feature_group]
     y_train_ws = train_data[y_col]
     y_train_ws = y_train_ws.astype('int')
+    print(x_train_ws)
+    print(y_train_ws)
+    # TODO: remove meal_taken fom x_train_ws
     # test data
     x_test_ws = test_data[feature_group]
     y_test_ws = test_data[y_col]
     y_test_ws = y_test_ws.astype('int')
+    # TODO: remove meal_taken fom x_test_ws
     # results
     rf_score_ws = RandomForest.rf_train_and_save(x_train_ws, y_train_ws, x_test_ws, y_test_ws, filename=filename)
 

@@ -68,6 +68,7 @@ def append_to_user_dataset(user_id, sensed_data, meal_taken):
         y_col = ["meal_taken"]
         f_groups = headers
         f_groups.remove("meal_taken")
+        f_groups.remove("user_id")
         model_file_name = "User Models/" + user_id
         rf_results = BASE.train_and_save(dataframe=df, feature_group=f_groups, y_col=y_col, training_percentage_min=90,
                                          training_percentage_max=95, filename=model_file_name, pers= True)
@@ -76,7 +77,7 @@ def append_to_user_dataset(user_id, sensed_data, meal_taken):
 
 
 def is_user_model_available(user_id):
-    wbk_path = "Saved Models/User Models/" + user_id + ".pkl"
+    wbk_path = "ML/Saved Models/User Models/" + user_id + ".pkl"
 
     if os.path.isfile(wbk_path) and os.access(wbk_path, os.R_OK):
         print("[File] Model file available : " + wbk_path)
