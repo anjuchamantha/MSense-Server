@@ -69,7 +69,11 @@ def train_and_save(dataframe, feature_group, y_col, filename, training_percentag
     y_test_ws = y_test_ws.astype('int')
     # TODO: remove meal_taken fom x_test_ws
     # results
+    print("Test set before RF")
+    print(x_test_ws)
     rf_score_ws = RandomForest.rf_train_and_save(x_train_ws, y_train_ws, x_test_ws, y_test_ws, filename=filename)
+    print("Features: ")
+    print(feature_group)
 
     t2 = datetime.now()
     # print("[Time] TRAIN Start Time    =", t1)

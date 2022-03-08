@@ -116,7 +116,7 @@ def append_to_db_dataset(user_id, sensed_data, meal_taken, db):
         # TODO: Make a df out of user's data
         # for row in user_data:
         headers, values, values_dict = feature_names_and_values(sensed_data=user_data[0])
-        f_groups = headers
+        f_groups = headers.copy()
 
         headers.append("meal_taken")
         headers.append("user_id")
