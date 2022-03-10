@@ -56,7 +56,7 @@ async def predict(sensed_data: SensedData):
 
 
 @app.post("/predict_with_csv/{user_id}")
-async def predict_pers(user_id: str, sensed_data: SensedData, meal_taken: Optional[str] = None):
+async def predict_pers_with_csv(user_id: str, sensed_data: SensedData, meal_taken: Optional[str] = None):
     data = [sensed_data.acc_x, sensed_data.acc_y, sensed_data.acc_z, sensed_data.acc_x_bef,
             sensed_data.acc_y_bef, sensed_data.acc_z_bef, sensed_data.acc_x_aft, sensed_data.acc_y_aft,
             sensed_data.acc_z_aft,
@@ -112,6 +112,7 @@ def create_dataset(row: schemas.DatasetCreate, db: Session = Depends(get_db)):
 
 @app.post("/predict/{user_id}")
 async def predict_pers(user_id: str, sensed_data: schemas.DatasetCreate, meal_taken: Optional[str] = None,
+                       prediction: Optional[str] = None,
                        db: Session = Depends(get_db)):
     data = [sensed_data.acc_x, sensed_data.acc_y, sensed_data.acc_z, sensed_data.acc_x_bef,
             sensed_data.acc_y_bef, sensed_data.acc_z_bef, sensed_data.acc_x_aft, sensed_data.acc_y_aft,
@@ -129,12 +130,14 @@ async def predict_pers(user_id: str, sensed_data: schemas.DatasetCreate, meal_ta
     if meal_taken:
         # Append the new datapoint with the ground truth
         msg = "New data point received and saved with ground truth"
-        append_to_db_dataset(user_id=user_id, sensed_data=sensed_data, meal_taken=float(meal_taken), db=db)
+        append_to_db_dataset(user_id=user_id, sensed_data=sensed_data, meal_taken=float(meal_taken),
+                             prediction=float(prediction), db=db)
 
         return {"message": msg,
                 "sensed data": sensed_data,
                 "user id": user_id,
-                "meal taken": meal_taken
+                "meal taken": meal_taken,
+                "prediction": prediction
                 }
     else:
         # If the user's number of data points is >10, test with the received data and send the prediction

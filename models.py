@@ -11,6 +11,9 @@ class Dataset(Base):
 
     user_id = Column(String, index=True)
     meal_taken = Column(Float, index=True)
+    prediction = Column(Float, index=True)
+
+    timestamp = Column(String, index=True)
 
     acc_x = Column(Float)
     acc_y = Column(Float)

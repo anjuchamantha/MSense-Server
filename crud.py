@@ -11,9 +11,9 @@ def get_user_rows(db: Session, user_id: str):
 
 
 # add a row to the dataset table
-def create_eating_event(db: Session, row: schemas.DatasetCreate, user_id: str, meal_taken: float):
+def create_eating_event(db: Session, row: schemas.DatasetCreate, user_id: str, meal_taken: float, prediction: float):
     print("Adding a row of a user")
-    db_item = models.Dataset(**row.dict(), user_id=user_id, meal_taken=meal_taken)
+    db_item = models.Dataset(**row.dict(), user_id=user_id, meal_taken=meal_taken, prediction=prediction)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)

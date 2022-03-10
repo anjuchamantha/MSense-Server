@@ -25,6 +25,7 @@ class Item(ItemBase):
 class DatasetBase(BaseModel):
     # user_id: str
     # meal_taken: float
+    timestamp: str
 
     acc_x: float
     acc_y: float

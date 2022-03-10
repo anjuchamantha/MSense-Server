@@ -77,7 +77,7 @@ def append_to_user_dataset(user_id, sensed_data, meal_taken):
         return rf_results
 
 
-def append_to_db_dataset(user_id, sensed_data, meal_taken, db):
+def append_to_db_dataset(user_id, sensed_data, meal_taken, prediction, db):
     # file_path = "ML/Saved Models/User Models/" + user_id + ".csv"
 
     #
@@ -95,7 +95,7 @@ def append_to_db_dataset(user_id, sensed_data, meal_taken, db):
 
     # Append new data as a new raw
     # TODO: add to db
-    crud.create_eating_event(db=db, row=sensed_data, user_id=user_id, meal_taken=meal_taken)
+    crud.create_eating_event(db=db, row=sensed_data, user_id=user_id, meal_taken=meal_taken, prediction=prediction)
 
     # If number of rows > 10,
     #   train the model and save
