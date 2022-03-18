@@ -8,7 +8,7 @@ production = True
 if not production:
     SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost/msense"
 else:
-    SQLALCHEMY_DATABASE_URL = "postgres://wkruwmsyhblwno:300f39c78c9d2138b07618190e610bd9dc2841a99b59f075804dc30c0c310dc0@ec2-54-144-237-73.compute-1.amazonaws.com:5432/dcb0th0bprbedl"
+    SQLALCHEMY_DATABASE_URL = "postgresql://wkruwmsyhblwno:300f39c78c9d2138b07618190e610bd9dc2841a99b59f075804dc30c0c310dc0@ec2-54-144-237-73.compute-1.amazonaws.com:5432/dcb0th0bprbedl"
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 # )
